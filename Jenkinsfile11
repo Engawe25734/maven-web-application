@@ -1,7 +1,7 @@
 pipeline{
   agent any 
   tools {
-    maven "maven 3.8.6"
+    maven "maven3.8.6"
   }  
   stages {
     stage('1GetCode'){
@@ -33,5 +33,4 @@ pipeline{
        deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.88.165.154:8080/')], contextPath: null, war: 'target/*war'
     }     
   }
- }
-}   
+ } 

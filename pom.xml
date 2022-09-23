@@ -96,13 +96,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://44.208.23.246:8081/repository/maven-releases/</url>
+	      <url>http://18.204.218.35:8081/repository/apple-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Snapshot Nexus Repository </name>
-	      <url>http://44.208.23.246:8081/repository/maven-snapshots/</url>
+	      <url>http://18.204.218.35:8081/repository/apple-snapshot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>

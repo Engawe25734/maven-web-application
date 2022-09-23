@@ -1,0 +1,34 @@
+node{
+    def mavenHome = tool name: 'maven 3.8.6'
+   stage('1clonecode'){
+      git credentialsId: 'github', url: 'https://github.com/Engawe25734/maven-web-application.git'
+   }
+   stage('2Test$Build'){
+       sh " echo testing and buildinb artifacts"
+       sh "${mavenHome}/bin/mvn clean package"
+   }
+   stage('3CodeQuality'){
+       sh "echo doing code quality anaylis"
+       sh "${mavenHome}/bin/mvn sonar:sonar"
+   }
+   stage('4uploadtonexus'){
+       sh "echo uploading artifacts to nexus"
+       sh "${mavenHome}/bin/mvn deploy"
+   }
+   stage('5deploy2UAT'){
+    sh "echo 'deploy to UAT'"
+       deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://44.204.1.56:8080/manager/html')], contextPath: null, war: 'target/*war'
+   }
+   stage('6approvalGate'){
+    sh "echo 'ready for review' "
+    timeout(time:5, unit:'DAYS') {
+        input message:"Application is ready to be deployed please review and act accordingly"
+       }    
+   } 
+   stage('7deployprod'){
+       sh "sleep 30"
+       deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://44.204.1.56:8080/manager/html')], contextPath: null, war: 'target/*war'
+       
+       
+   }
+}
